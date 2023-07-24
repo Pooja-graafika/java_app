@@ -8,7 +8,7 @@ trigger:
 
 pool:
   name: new
-  demands: pipeline-agent
+  demands: maven
 
 
 steps:
