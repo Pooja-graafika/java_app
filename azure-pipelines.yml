@@ -33,3 +33,10 @@ steps:
     repository: 'poojajeeva/azurejava'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+
+- task: KubernetesManifest@1
+  inputs:
+    action: 'deploy'
+    connectionType: 'kubernetesServiceConnection'
+    namespace: 'default'
+    manifests: 'deployment.yaml'
