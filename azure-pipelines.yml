@@ -6,7 +6,10 @@
 trigger:
 - main
 
-pool: 'new'
+pool:
+  name: new
+  demands: pipeline-agent
+
 
 steps:
 - script: echo Hello, world!
