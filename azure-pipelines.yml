@@ -28,13 +28,20 @@ steps:
     sonarQubeRunAnalysis: false
 
 
-- task: Docker@2
-  inputs:
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
+# - task: Docker@2
+#   inputs:
+#     command: 'build'
+#     Dockerfile: '**/Dockerfile'
+
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'docker'
+#     repository: 'azurejava'
+#     command: 'push'
 
 - task: Docker@2
   inputs:
     containerRegistry: 'docker'
     repository: 'azurejava'
-    command: 'push'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
