@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: myjavaapp
-        image: poojajeeva/javapp:latest
+        image: poojajeeva/azurejava:latest
         ports:
         - containerPort: 8080
 
