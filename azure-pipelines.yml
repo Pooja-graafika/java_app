@@ -27,25 +27,31 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
-
-# - task: Docker@2
-#   inputs:
-#     command: 'build'
-#     Dockerfile: '**/Dockerfile'
-
+    
 # - task: Docker@2
 #   inputs:
 #     containerRegistry: 'docker'
 #     repository: 'azurejava'
-#     command: 'push'
+#     command: 'buildAndPush'
+#     Dockerfile: '**/Dockerfile'
+
+# - task: Docker@0
+#   displayName: 'Build an image'
+#   inputs:
+#     containerregistrytype: 'Container Registry'
+#     dockerRegistryConnection: docker
+
+
+# - task: Docker@0
+#   displayName: 'Push an image'
+#   inputs:
+#     containerregistrytype: 'Container Registry'
+#     dockerRegistryConnection: docker
+#     action: 'Push an image'
+
 - task: Docker@2
   inputs:
     containerRegistry: 'docker'
-    command: 'login'
-    
-- task: Docker@2
-  inputs:
-    containerRegistry: 'docker'
-    repository: 'azurejava'
+    repository: 'poojajeeva/azurejava'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
