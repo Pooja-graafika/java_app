@@ -33,7 +33,9 @@ steps:
     repository: 'poojajeeva/azurejava'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: '$(Build.BuildId) | latest' 
+    tags: |
+       '$(Build.BuildId)'
+       'latest' 
 
 
 - task: KubernetesManifest@1
