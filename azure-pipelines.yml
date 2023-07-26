@@ -25,7 +25,9 @@ steps:
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: pom
+
 
 - task: Docker@2
   inputs:
@@ -46,17 +48,7 @@ steps:
     namespace: 'default'
     manifests: 'deployment.yaml'
     
-# ... existing pipeline YAML ...
 
-- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=azure-java_azurejava
-  displayName: 'Run SonarCloud Analysis'
-
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
-  displayName: 'Publish Quality Gate Result'
-
-# ... remaining pipeline YAML ...
 
 
 
