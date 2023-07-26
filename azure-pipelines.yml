@@ -45,3 +45,20 @@ steps:
     kubernetesServiceConnection: 'aks'
     namespace: 'default'
     manifests: 'deployment.yaml'
+    
+- task: SonarCloudPrepare@1
+  displayName: 'Prepare analysis configuration'
+  inputs:
+    SonarCloud: 'sonar'
+    organization: 'azure-java'
+    scannerMode: Other
+    
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
+  inputs:
+    jdkversion: 'JAVA_HOME'
+
+- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  displayName: 'Publish Quality Gate Result'
+
+
