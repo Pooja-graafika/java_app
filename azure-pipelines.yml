@@ -1,43 +1,43 @@
 pool:
-  name: Azure Pipelines
-  demands: maven
+  name: Azure Pipelines
+  demands: maven
 
 #Your build pipeline references an undefined variable named ‘Parameters.mavenPOMFile’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
 steps:
 - task: SonarQubePrepare@5
-  displayName: 'Prepare analysis on SonarQube'
-  inputs:
-    SonarQube: 'My_SonarQube'
-    scannerMode: Other
+  displayName: 'Prepare analysis on SonarQube'
+  inputs:
+    SonarQube: 'My_SonarQube'
+    scannerMode: Other
 
 - task: JavaToolInstaller@0
-  displayName: 'Use Java 11'
-  inputs:
-    versionSpec: 11
-    jdkArchitectureOption: x64
-    jdkSourceOption: PreInstalled
+  displayName: 'Use Java 11'
+  inputs:
+    versionSpec: 11
+    jdkArchitectureOption: x64
+    jdkSourceOption: PreInstalled
 
 - task: Maven@3
-  displayName: 'Maven pom.xml'
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: '-DskipTests package sonar:sonar'
+  displayName: 'Maven pom.xml'
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: '-DskipTests clean package sonar:sonar'
 
 - task: Docker@2
-  inputs:
-    containerRegistry: 'docker'
-    repository: 'poojajeeva/azurejava'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: |
-      $(Build.BuildId)
-      latest
+  inputs:
+    containerRegistry: 'docker'
+    repository: 'poojajeeva/azurejava'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+      latest
 
 - task: KubernetesManifest@1
-  inputs:
-    action: 'deploy'
-    connectionType: 'kubernetesServiceConnection'
-    kubernetesServiceConnection: 'aks'
-    namespace: 'default'
-    manifests: 'deployment.yaml'
+  inputs:
+    action: 'deploy'
+    connectionType: 'kubernetesServiceConnection'
+    kubernetesServiceConnection: 'aks'
+    namespace: 'default'
+    manifests: 'deployment.yaml'
