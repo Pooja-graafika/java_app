@@ -18,32 +18,19 @@ steps:
 
 
 
+
 - task: SonarQubePrepare@5
+  displayName: 'Prepare analysis on SonarQube'
   inputs:
     SonarQube: 'My_SonarQube'
-    scannerMode: 'Other'
-    extraProperties: |
-      # Additional properties that will be passed to the scanner,
-      # Put one key=value per line, example:
-      # sonar.exclusions=**/*.bin
-      sonar.projectKey=test_test_AYmWL0WGDH_Q_LsaYEmG
-      sonar.projectName=test
-      sonar.projectVersion=1.0.0.0
-      sonar.sources=src/main/java/
-      sonar.language=java
-      sonar.sourceEncoding=UTF-8
+    scannerMode: Other
 
 
-- task: Maven@4
+- task: Maven@3
+  displayName: 'Maven pom.xml'
   inputs:
-    mavenPomFile: 'pom.xml'
-    goals: '-DskipTests clean package'
-    publishJUnitResults: true
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    mavenPomFile: '$(Parameters.mavenPOMFile)'
+    goals: '-DskipTests package sonar:sonar'
 
 # - task: Bash@3
 #   displayName: 'Run sonar:sonar'
