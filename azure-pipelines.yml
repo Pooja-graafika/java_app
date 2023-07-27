@@ -45,13 +45,13 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
-- task: Bash@3
-  displayName: 'Run sonar:sonar'
-  inputs:
-    targetType: 'inline'
-    script: |
-      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-      mvn sonar:sonar   
+# - task: Bash@3
+#   displayName: 'Run sonar:sonar'
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+#       mvn sonar:sonar   
 
 - task: SonarQubePublish@5
   inputs:
