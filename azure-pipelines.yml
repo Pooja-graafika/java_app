@@ -1,30 +1,22 @@
-# Starter pipeline
-
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-trigger:
-- master
-
 pool:
-  name: new
+  name: Azure Pipelines
   demands: maven
 
+#Your build pipeline references an undefined variable named ‘Parameters.mavenPOMFile’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-
-
-
 - task: SonarQubePrepare@5
   displayName: 'Prepare analysis on SonarQube'
   inputs:
     SonarQube: 'My_SonarQube'
     scannerMode: Other
 
+- task: JavaToolInstaller@0
+  displayName: 'Use Java 11'
+  inputs:
+    versionSpec: 11
+    jdkArchitectureOption: x64
+    jdkSourceOption: PreInstalled
 
 - task: Maven@3
   displayName: 'Maven pom.xml'
@@ -32,33 +24,16 @@ steps:
     mavenPomFile: '$(Parameters.mavenPOMFile)'
     goals: '-DskipTests package sonar:sonar'
 
-# - task: Bash@3
-#   displayName: 'Run sonar:sonar'
-#   inputs:
-#     targetType: 'inline'
-#     script: |
-#       export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-#       mvn sonar:sonar   
-
-- task: SonarQubePublish@5
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
-    pollingTimeoutSec: '300'
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**/*.jar'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
 
-- task: Docker@2
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
   inputs:
-    containerRegistry: 'docker'
-    repository: 'poojajeeva/azurejava'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: |
-      $(Build.BuildId)
-      latest
-
-
-- task: KubernetesManifest@1
-  inputs:
-    action: 'deploy'
-    connectionType: 'kubernetesServiceConnection'
-    kubernetesServiceConnection: 'aks'
-    namespace: 'default'
-    manifests: 'deployment.yaml'
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
