@@ -71,3 +71,16 @@ References
 7. Jira       : https://youtu.be/i2I1xpVZjeM
 8. Prometheus : https://www.coachdevops.com/2022/05/how-to-setup-monitoring-on-kubernetes.html
 9. Grafana    : https://www.coachdevops.com/2022/05/how-to-setup-monitoring-on-kubernetes.html
+
+
+Azure pipelines:
+AKS cluster + service principal (contributor) 
+
+In Azure Devops:
+Microsoft hosted agent
+
+Service connections established for:-
+1. github
+2. sonarqube
+3. dockerhub
+4. AKS cluster 
