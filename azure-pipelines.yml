@@ -37,6 +37,11 @@ steps:
       # sonar.exclusions=**/*.bin
       sonar.projectKey=test_test_AYmWL0WGDH_Q_LsaYEmG
       sonar.projectName=test
+      sonar.projectVersion=1.0.0.0
+      sonar.sources=src/main/java/
+      sonar.language=java
+      sonar.sourceEncoding=UTF-8
+
 
 - task: Maven@4
   inputs:
@@ -49,6 +54,7 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
+    
 
 - task: SonarQubePublish@5
   inputs:
