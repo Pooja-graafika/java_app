@@ -32,11 +32,11 @@ steps:
     SonarQube: 'My_SonarQube'
     scannerMode: 'Other'
 
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '11'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+# - task: JavaToolInstaller@0
+#   inputs:
+#     versionSpec: '11'
+#     jdkArchitectureOption: 'x64'
+#     jdkSourceOption: 'PreInstalled'
 
 - task: Maven@4
   inputs:
