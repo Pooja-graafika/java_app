@@ -31,6 +31,13 @@ steps:
   inputs:
     SonarQube: 'My_SonarQube'
     scannerMode: 'Other'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.projectKey=test_test_AYmWL0WGDH_Q_LsaYEmG
+      sonar.projectName=test
+
 
 - task: Maven@4
   inputs:
@@ -45,15 +52,9 @@ steps:
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
 
-
-- task: SonarQubeAnalyze@5
-  inputs:
-    jdkversion: 'JAVA_HOME_11_X64'
-
 - task: SonarQubePublish@5
   inputs:
     pollingTimeoutSec: '300'
-
 
 - task: Docker@2
   inputs:
