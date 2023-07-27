@@ -38,6 +38,11 @@ steps:
       sonar.projectKey=test_test_AYmWL0WGDH_Q_LsaYEmG
       sonar.projectName=test
 
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '11.0.19'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
 
 - task: Maven@4
   inputs:
